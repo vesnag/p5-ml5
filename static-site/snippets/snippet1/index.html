@@ -1,0 +1,14 @@
+<div id="snippet1-container">
+  <div id="snippet1-canvas"></div>
+
+  <script>
+    // Dynamically load the sketch.js file
+    const script = document.createElement('script');
+    script.src = "snippets/snippet1/sketch.js";
+    script.onload = function () {
+      // Initialize the p5 sketch after the script is loaded
+      new p5(sketch, 'snippet1-canvas');
+    };
+    document.body.appendChild(script);
+  </script>
+</div>

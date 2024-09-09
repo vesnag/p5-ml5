@@ -1,0 +1,12 @@
+<div id="snippet2-container">
+  <div id="snippet2-canvas"></div>
+
+  <script>
+    const script = document.createElement('script');
+    script.src = "snippets/snippet2/sketch.js";
+    script.onload = function () {
+      new p5(sketch, 'snippet2-canvas');
+    };
+    document.body.appendChild(script);
+  </script>
+</div>
