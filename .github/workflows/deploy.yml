@@ -21,7 +21,7 @@ jobs:
       - name: Build site
         run: |
           export BASE_URL="https://vesnag.github.io/p5-ml5/"
-          hugo --source p5-ml5-site --config p5-ml5-site/hugo.toml --baseURL $BASE_URL
+          hugo --source p5-ml5-site --baseURL $BASE_URL
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3

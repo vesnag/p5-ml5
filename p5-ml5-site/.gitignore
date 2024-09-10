@@ -1,19 +1,4 @@
-# Hugo generated files
+node_modules/
 public/
 resources/_gen/
-hugo_stats.json
 .hugo_build.lock
-
-# OS generated files
-.DS_Store
-Thumbs.db
-
-# Node modules
-node_modules/
-
-# Logs
-*.log
-
-# Temporary files
-*.tmp
-*.swp
