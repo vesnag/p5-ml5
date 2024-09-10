@@ -1,0 +1,14 @@
+<div class="container mx-auto">
+  <h1 class="text-3xl font-bold">{{ .Title }}</h1>
+  <img src="{{ .Params.thumbnail }}" alt="{{ .Title }}" class="w-full">
+  <p>{{ .Params.description }}</p>
+  <a href="{{ .Params.github_url }}" class="text-blue-500">View on GitHub</a>
+
+  <!-- Button to play the converted JS version -->
+  <button class="bg-blue-500 text-white px-4 py-2"
+    hx-get="{{ .Params.script_converted }}" hx-target="#snippet-player">Play
+    Snippet</button>
+  <div id="snippet-player" class="border mt-4 p-4">
+    <p>Select a snippet to play</p>
+  </div>
+</div>
