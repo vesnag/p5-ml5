@@ -2,20 +2,10 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
   xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
-    <loc>https://example.org/categories/</loc>
+    <loc>https://vesnag.github.io/p5-ml5/categories/</loc>
   </url><url>
-    <loc>https://example.org/ml5/snippet1/</loc>
+    <loc>https://vesnag.github.io/p5-ml5/</loc>
   </url><url>
-    <loc>https://example.org/ml5/</loc>
-  </url><url>
-    <loc>https://example.org/</loc>
-  </url><url>
-    <loc>https://example.org/p5/snippet1/</loc>
-  </url><url>
-    <loc>https://example.org/p5/snippet2/</loc>
-  </url><url>
-    <loc>https://example.org/p5/</loc>
-  </url><url>
-    <loc>https://example.org/tags/</loc>
+    <loc>https://vesnag.github.io/p5-ml5/tags/</loc>
   </url>
 </urlset>
