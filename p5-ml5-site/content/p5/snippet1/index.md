@@ -1,8 +1,8 @@
 ---
-title: "P5 Snippet 1"
-description: "A cool p5.js sketch."
+title: "Interactive Bouncing Circle with Confetti Effect"
+description: "This p5.js snippet creates an interactive bouncing circle that changes color and triggers a confetti explosion when clicked."
 thumbnail: "thumbnail.jpg"
-script_original: "original.js"
-script_converted: "converted.js"
+snippet: "snippet.js"
+github_url: "https://github.com/vesnag/p5-ml5/blob/gh-pages-wrong/p5/confetti-circles-of-purples.js"
 type: "p5"
 ---

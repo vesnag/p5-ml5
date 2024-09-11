@@ -33,6 +33,14 @@
     .bg-ml5-color {
       background-color: #8833FF;
     }
+
+   .bg-stop-color {
+      background-color: #8f49bb;
+    }
+
+    .text-stop-color {
+      color: #FFFFFF;
+    }
   </style>
 </head>
 
@@ -54,20 +62,26 @@
       <div class="p-8">
         <h2 class="text-3xl font-semibold text-gray-800">About This Project</h2>
         <p class="mt-4 text-lg text-gray-600">
-          This is my side project where I play around with interactive coding snippets,
-          using <span class="p5-color">p5.js</span> for creative visuals and <span
-            class="ml5-color">ml5.js</span> to bring in some simple machine learning. A
+          This is my side project where I play around with interactive coding
+          snippets,
+          using <span class="p5-color">p5.js</span> for creative visuals and
+          <span class="ml5-color">ml5.js</span> to bring in some simple machine
+          learning. A
           lot of the inspiration comes from the amazing work at <a
             href="https://thecodingtrain.com/" class="text-blue-500 underline"
-            target="_blank">The Coding Train</a> and the YouTube channel that used to be
+            target="_blank">The Coding Train</a> and the YouTube channel that
+          used to be
           called "Rainbow Coding." I also pull ideas from the book <a
             href="https://natureofcode.com/" class="text-blue-500 underline"
-            target="_blank">The Nature of Code</a>, which has been a big influence.
+            target="_blank">The Nature of Code</a>, which has been a big
+          influence.
 
           The color schemes and animations might even remind you of the <a
             href="https://www.youtube.com/watch?v=yXJl5Gf05zg"
-            class="text-blue-500 underline" target="_blank">BenZel & Jessie Ware - "If You
-            Love Me"</a> video. This project is just my way of exploring the overlap
+            class="text-blue-500 underline" target="_blank">BenZel & Jessie Ware
+            - "If You
+            Love Me"</a> video. This project is just my way of exploring the
+          overlap
           between art, AI, and web development.
         </p>
       </div>
@@ -117,13 +131,13 @@
       </div>
       <div class="text-center mt-4">
         <button id="stop-button"
-          class="hidden bg-darkPurple text-white py-2 px-6 rounded-full mt-4 hover:bg-brightMagenta transition duration-300"
+          class="hidden bg-stop-color text-stop-color py-2 px-6 rounded-full mt-4 hover:bg-pinkish-purple-2 transition duration-300"
           onclick="stopSnippet()">Stop Snippet</button>
       </div>
     </div>
 
-    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span class="text-p5Color">p5.js</span>
-      Snippets</h2>
+    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span
+        class="text-p5Color">p5.js</span> Snippets</h2>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 px-6">
       {{ $posts := where .Site.RegularPages "Params.type" "p5" }}
       {{ range $posts }}
@@ -131,18 +145,28 @@
         class="p-6 bg-white text-darkPurple border-4 border-p5-color rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
         <img src="{{ .RelPermalink }}{{ .Params.thumbnail }}" alt="{{ .Title }}"
           class="w-full h-48 object-cover rounded mb-4">
-        <h2 class="text-2xl font-semibold mb-2 text-p5Color">{{ .Title }}</h2>
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-semibold text-p5Color flex-grow">{{ .Title }}
+          </h2>
+          <a href="{{ .Params.github_url }}" target="_blank"
+            class="ml-2 flex-shrink-0">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub" class="w-6 h-6">
+          </a>
+        </div>
         <p class="mb-4">{{ .Params.description }}</p>
         <button
           class="bg-p5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
-          onclick="loadSketch('{{ .RelPermalink }}{{ .Params.script_converted }}')">Run
+          onclick="loadSketch('{{ .RelPermalink }}{{ .Params.snippet }}')">Run
           Snippet</button>
+
       </div>
       {{ end }}
     </div>
 
-    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span class="text-ml5Color">ml5.js</span>
-      Snippets</h2>
+    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span
+        class="text-ml5Color">ml5.js</span> Snippets</h2>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 px-6">
       {{ $posts := where .Site.RegularPages "Params.type" "ml5" }}
       {{ range $posts }}
@@ -150,11 +174,20 @@
         class="p-6 bg-white text-darkPurple border-4 border-ml5-color rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
         <img src="{{ .RelPermalink }}{{ .Params.thumbnail }}" alt="{{ .Title }}"
           class="w-full h-48 object-cover rounded mb-4">
-        <h2 class="text-2xl font-semibold mb-2 text-ml5Color">{{ .Title }}</h2>
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-semibold text-ml5Color flex-grow">{{ .Title }}
+          </h2>
+          <a href="{{ .Params.github_url }}" target="_blank"
+            class="ml-2 flex-shrink-0">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub" class="w-6 h-6">
+          </a>
+        </div>
         <p class="mb-4">{{ .Params.description }}</p>
         <button
           class="bg-ml5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
-          onclick="loadSketch('{{ .RelPermalink }}{{ .Params.script_converted }}')">Run
+          onclick="loadSketch('{{ .RelPermalink }}{{ .Params.snippet }}')">Run
           Snippet</button>
       </div>
       {{ end }}

@@ -8,22 +8,27 @@ const nonP5Functions = [
 ];
 
 function transformAST(node, nonP5Functions) {
-  if (node.type === 'CallExpression' || node.type === 'Identifier') {
-    const name = node.name || (node.callee && node.callee.name);
-    if (name && !nonP5Functions.includes(name)) {
-      return {
-        type: 'MemberExpression',
-        object: { type: 'Identifier', name: 'p' },
-        property: { type: 'Identifier', name: name },
-        computed: false
-      };
+  if (node.type === 'Identifier' && !nonP5Functions.includes(node.name)) {
+    return {
+      type: 'MemberExpression',
+      object: { type: 'Identifier', name: 'p' },
+      property: { type: 'Identifier', name: node.name },
+      computed: false
+    };
+  }
+
+  if (node.type === 'FunctionDeclaration' || node.type === 'FunctionExpression') {
+    if (node.id && node.id.name) {
+      node.id = { type: 'Identifier', name: node.id.name };
     }
   }
+
   for (const key in node) {
     if (node[key] && typeof node[key] === 'object') {
       node[key] = transformAST(node[key], nonP5Functions);
     }
   }
+
   return node;
 }
 

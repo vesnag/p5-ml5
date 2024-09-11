@@ -1,8 +1,8 @@
 ---
-title: "P5 Snippet 2"
-description: "A cool p5.js sketch."
+title: "Dynamic Color Fade Grid Animation"
+description: "This p5.js sketch creates a 5x5 grid of squares with different colors that dynamically fade in and out at random speeds and intervals, providing a visually captivating animation."
 thumbnail: "thumbnail.jpg"
-script_original: "original.js"
-script_converted: "converted.js"
+snippet: "snippet.js"
+github_url: "https://github.com/vesnag/p5-ml5/blob/gh-pages-wrong/p5/twinkling-squares.js"
 type: "p5"
 ---
