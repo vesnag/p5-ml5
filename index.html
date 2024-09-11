@@ -34,6 +34,14 @@
     .bg-ml5-color {
       background-color: #8833FF;
     }
+
+   .bg-stop-color {
+      background-color: #8f49bb;
+    }
+
+    .text-stop-color {
+      color: #FFFFFF;
+    }
   </style>
 </head>
 
@@ -55,20 +63,26 @@
       <div class="p-8">
         <h2 class="text-3xl font-semibold text-gray-800">About This Project</h2>
         <p class="mt-4 text-lg text-gray-600">
-          This is my side project where I play around with interactive coding snippets,
-          using <span class="p5-color">p5.js</span> for creative visuals and <span
-            class="ml5-color">ml5.js</span> to bring in some simple machine learning. A
+          This is my side project where I play around with interactive coding
+          snippets,
+          using <span class="p5-color">p5.js</span> for creative visuals and
+          <span class="ml5-color">ml5.js</span> to bring in some simple machine
+          learning. A
           lot of the inspiration comes from the amazing work at <a
             href="https://thecodingtrain.com/" class="text-blue-500 underline"
-            target="_blank">The Coding Train</a> and the YouTube channel that used to be
+            target="_blank">The Coding Train</a> and the YouTube channel that
+          used to be
           called "Rainbow Coding." I also pull ideas from the book <a
             href="https://natureofcode.com/" class="text-blue-500 underline"
-            target="_blank">The Nature of Code</a>, which has been a big influence.
+            target="_blank">The Nature of Code</a>, which has been a big
+          influence.
 
           The color schemes and animations might even remind you of the <a
             href="https://www.youtube.com/watch?v=yXJl5Gf05zg"
-            class="text-blue-500 underline" target="_blank">BenZel & Jessie Ware - "If You
-            Love Me"</a> video. This project is just my way of exploring the overlap
+            class="text-blue-500 underline" target="_blank">BenZel & Jessie Ware
+            - "If You
+            Love Me"</a> video. This project is just my way of exploring the
+          overlap
           between art, AI, and web development.
         </p>
       </div>
@@ -118,44 +132,64 @@
       </div>
       <div class="text-center mt-4">
         <button id="stop-button"
-          class="hidden bg-darkPurple text-white py-2 px-6 rounded-full mt-4 hover:bg-brightMagenta transition duration-300"
+          class="hidden bg-stop-color text-stop-color py-2 px-6 rounded-full mt-4 hover:bg-pinkish-purple-2 transition duration-300"
           onclick="stopSnippet()">Stop Snippet</button>
       </div>
     </div>
 
-    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span class="text-p5Color">p5.js</span>
-      Snippets</h2>
+    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span
+        class="text-p5Color">p5.js</span> Snippets</h2>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 px-6">
       
       
       <div
         class="p-6 bg-white text-darkPurple border-4 border-p5-color rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <img src="/p5-ml5/p5/snippet1/thumbnail.jpg" alt="P5 Snippet 1"
+        <img src="/p5-ml5/p5/snippet2/thumbnail.jpg" alt="Dynamic Color Fade Grid Animation"
           class="w-full h-48 object-cover rounded mb-4">
-        <h2 class="text-2xl font-semibold mb-2 text-p5Color">P5 Snippet 1</h2>
-        <p class="mb-4">A cool p5.js sketch.</p>
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-semibold text-p5Color flex-grow">Dynamic Color Fade Grid Animation
+          </h2>
+          <a href="https://github.com/vesnag/p5-ml5/blob/gh-pages-wrong/p5/twinkling-squares.js" target="_blank"
+            class="ml-2 flex-shrink-0">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub" class="w-6 h-6">
+          </a>
+        </div>
+        <p class="mb-4">This p5.js sketch creates a 5x5 grid of squares with different colors that dynamically fade in and out at random speeds and intervals, providing a visually captivating animation.</p>
         <button
           class="bg-p5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
-          onclick="loadSketch('\/p5-ml5\/p5\/snippet1\/converted.js')">Run
+          onclick="loadSketch('\/p5-ml5\/p5\/snippet2\/snippet.js')">Run
           Snippet</button>
+
       </div>
       
       <div
         class="p-6 bg-white text-darkPurple border-4 border-p5-color rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
-        <img src="/p5-ml5/p5/snippet2/thumbnail.jpg" alt="P5 Snippet 2"
+        <img src="/p5-ml5/p5/snippet1/thumbnail.jpg" alt="Interactive Bouncing Circle with Confetti Effect"
           class="w-full h-48 object-cover rounded mb-4">
-        <h2 class="text-2xl font-semibold mb-2 text-p5Color">P5 Snippet 2</h2>
-        <p class="mb-4">A cool p5.js sketch.</p>
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-semibold text-p5Color flex-grow">Interactive Bouncing Circle with Confetti Effect
+          </h2>
+          <a href="https://github.com/vesnag/p5-ml5/blob/gh-pages-wrong/p5/confetti-circles-of-purples.js" target="_blank"
+            class="ml-2 flex-shrink-0">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub" class="w-6 h-6">
+          </a>
+        </div>
+        <p class="mb-4">This p5.js snippet creates an interactive bouncing circle that changes color and triggers a confetti explosion when clicked.</p>
         <button
           class="bg-p5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
-          onclick="loadSketch('\/p5-ml5\/p5\/snippet2\/converted.js')">Run
+          onclick="loadSketch('\/p5-ml5\/p5\/snippet1\/snippet.js')">Run
           Snippet</button>
+
       </div>
       
     </div>
 
-    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span class="text-ml5Color">ml5.js</span>
-      Snippets</h2>
+    <h2 class="text-4xl font-bold mt-12 mb-6 text-center"><span
+        class="text-ml5Color">ml5.js</span> Snippets</h2>
     <div class="grid grid-cols-1 gap-8 md:grid-cols-2 lg:grid-cols-3 px-6">
       
       
@@ -163,11 +197,20 @@
         class="p-6 bg-white text-darkPurple border-4 border-ml5-color rounded-lg shadow-lg hover:shadow-2xl transition-shadow duration-300">
         <img src="/p5-ml5/ml5/snippet1/thumbnail.jpg" alt="ML5 Snippet 1"
           class="w-full h-48 object-cover rounded mb-4">
-        <h2 class="text-2xl font-semibold mb-2 text-ml5Color">ML5 Snippet 1</h2>
+        <div class="flex items-center justify-between mb-2">
+          <h2 class="text-2xl font-semibold text-ml5Color flex-grow">ML5 Snippet 1
+          </h2>
+          <a href="" target="_blank"
+            class="ml-2 flex-shrink-0">
+            <img
+              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
+              alt="GitHub" class="w-6 h-6">
+          </a>
+        </div>
         <p class="mb-4">A cool p5.js sketch.</p>
         <button
           class="bg-ml5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
-          onclick="loadSketch('\/p5-ml5\/ml5\/snippet1\/converted.js')">Run
+          onclick="loadSketch('\/p5-ml5\/ml5\/snippet1\/')">Run
           Snippet</button>
       </div>
       
