@@ -1,8 +1,7 @@
 ---
 title: "ML5 Snippet 1"
-description: "A cool p5.js sketch."
+description: "Lorem ipsum"
 thumbnail: "thumbnail.jpg"
-script_original: "original.js"
-script_converted: "converted.js"
+snippet: "snippet.js"
 type: "ml5"
 ---

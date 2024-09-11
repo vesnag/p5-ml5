@@ -1,4 +1,4 @@
-let sketch = function (p) {
+function(p) {
   const COLORS = {
     lavenderPurple: '#9151b0',
     lightPink: '#cb90d2',
@@ -11,7 +11,7 @@ let sketch = function (p) {
     violet: '#623eaa',
     rosePink: '#f774aa',
     deepRed: '#8f2968',
-    darkRed: '#98254c'
+    darkRed: '#98254c',
   };
 
   const gridColors = [
@@ -54,7 +54,7 @@ let sketch = function (p) {
       fadeSpeed: p.random(0.5, 2),
       fadeDirection: -1,
       delay: p.random(500, 2000),
-      startTime: p.millis()
+      startTime: p.millis(),
     };
   }
 
@@ -86,4 +86,4 @@ let sketch = function (p) {
     col.setAlpha(alpha);
     return col;
   }
-};
+}
