@@ -1,0 +1,87 @@
+/* styles.css */
+
+/* Custom colors */
+.p5-color {
+  color: #ED225D;
+}
+
+.text-p5Color {
+  color: #ED225D;
+}
+
+.bg-p5-color {
+  background-color: #ED225D;
+}
+
+.ml5-color {
+  color: #8833FF;
+}
+
+.text-ml5Color {
+  color: #8833FF;
+}
+
+.bg-ml5-color {
+  background-color: #8833FF;
+}
+
+.bg-stop-color {
+  background-color: #8f49bb;
+}
+
+.text-stop-color {
+  color: #FFFFFF;
+}
+
+/* Additional styles */
+body {
+  background-color: #f7fafc;
+  font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+header {
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+main {
+  padding: 2rem;
+}
+
+section {
+  background-color: #ffffff;
+  border-radius: 0.5rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out;
+}
+
+section:hover {
+  transform: scale(1.05);
+}
+
+button {
+  border-radius: 9999px;
+  padding: 0.5rem 1rem;
+  transition: background-color 0.3s ease;
+}
+
+button:hover {
+  background-color: #d53f8c;
+}
+
+footer {
+  background-color: #1a202c;
+  color: #e2e8f0;
+  padding: 2rem;
+  text-align: center;
+}
+
+footer a {
+  color: #e2e8f0;
+  text-decoration: none;
+}
+
+footer a:hover {
+  text-decoration: underline;
+}

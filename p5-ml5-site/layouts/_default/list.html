@@ -9,39 +9,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
   <script src="https://unpkg.com/htmx.org@1.5.0"></script>
-  <style>
-    .p5-color {
-      color: #ED225D;
-    }
-
-    .text-p5Color {
-      color: #ED225D;
-    }
-
-    .bg-p5-color {
-      background-color: #ED225D;
-    }
-
-    .ml5-color {
-      color: #8833FF;
-    }
-
-    .text-ml5Color {
-      color: #8833FF;
-    }
-
-    .bg-ml5-color {
-      background-color: #8833FF;
-    }
-
-   .bg-stop-color {
-      background-color: #8f49bb;
-    }
-
-    .text-stop-color {
-      color: #FFFFFF;
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="bg-gray-100 font-sans antialiased">
@@ -148,19 +116,20 @@
         <div class="flex items-center justify-between mb-2">
           <h2 class="text-2xl font-semibold text-p5Color flex-grow">{{ .Title }}
           </h2>
+          {{ if .Params.github_url }}
           <a href="{{ .Params.github_url }}" target="_blank"
             class="ml-2 flex-shrink-0">
             <img
               src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
               alt="GitHub" class="w-6 h-6">
           </a>
+          {{ end }}
         </div>
         <p class="mb-4">{{ .Params.description }}</p>
         <button
           class="bg-p5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
           onclick="loadSketch('{{ .RelPermalink }}{{ .Params.snippet }}')">Run
           Snippet</button>
-
       </div>
       {{ end }}
     </div>
@@ -175,14 +144,16 @@
         <img src="{{ .RelPermalink }}{{ .Params.thumbnail }}" alt="{{ .Title }}"
           class="w-full h-48 object-cover rounded mb-4">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-2xl font-semibold text-ml5Color flex-grow">{{ .Title }}
-          </h2>
+          <h2 class="text-2xl font-semibold text-ml5Color flex-grow">{{ .Title
+            }}</h2>
+          {{ if .Params.github_url }}
           <a href="{{ .Params.github_url }}" target="_blank"
             class="ml-2 flex-shrink-0">
             <img
               src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
               alt="GitHub" class="w-6 h-6">
           </a>
+          {{ end }}
         </div>
         <p class="mb-4">{{ .Params.description }}</p>
         <button
@@ -213,50 +184,7 @@
     </div>
   </footer>
 
-  <script>
-    let currentSketch = null;
-    let currentScriptElement = null;
-
-    const stopSnippet = () => {
-      currentSketch?.remove();
-      currentSketch = null;
-
-      if (currentScriptElement) {
-        document.head.removeChild(currentScriptElement);
-        currentScriptElement = null;
-      }
-
-      document.getElementById('player-container').innerHTML = '<p class="text-softPink">Select a snippet to run</p>';
-      document.getElementById('stop-button').classList.add('hidden');
-    };
-
-    const loadSketch = (scriptPath) => {
-      currentSketch?.remove();
-      if (currentScriptElement) {
-        document.head.removeChild(currentScriptElement);
-      }
-
-      document.getElementById('player-container').innerHTML = '';
-      const scriptElement = document.createElement('script');
-      scriptElement.src = scriptPath;
-      document.head.appendChild(scriptElement);
-      currentScriptElement = scriptElement;
-
-      scriptElement.onload = () => {
-        if (typeof sketch === 'function') {
-          currentSketch = new p5(sketch, 'player-container');
-          startSnippet();
-        } else {
-          console.error('Sketch function not found in the loaded script.');
-        }
-      };
-    };
-
-    const startSnippet = () => {
-      document.getElementById('stop-button').classList.remove('hidden');
-    };
-  </script>
-
+  <script src="js/snippet-player.js"></script>
 </body>
 
 </html>
