@@ -10,39 +10,7 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <script src="https://cdn.jsdelivr.net/npm/p5@1.4.0/lib/p5.min.js"></script>
   <script src="https://unpkg.com/htmx.org@1.5.0"></script>
-  <style>
-    .p5-color {
-      color: #ED225D;
-    }
-
-    .text-p5Color {
-      color: #ED225D;
-    }
-
-    .bg-p5-color {
-      background-color: #ED225D;
-    }
-
-    .ml5-color {
-      color: #8833FF;
-    }
-
-    .text-ml5Color {
-      color: #8833FF;
-    }
-
-    .bg-ml5-color {
-      background-color: #8833FF;
-    }
-
-   .bg-stop-color {
-      background-color: #8f49bb;
-    }
-
-    .text-stop-color {
-      color: #FFFFFF;
-    }
-  </style>
+  <link rel="stylesheet" href="css/styles.css">
 </head>
 
 <body class="bg-gray-100 font-sans antialiased">
@@ -127,8 +95,12 @@
       <h2 class="text-3xl font-semibold text-gray-800 text-center mb-6">Snippet
         Player</h2>
       <div id="player-container"
-        class="border-4 border-brightMagenta rounded-lg bg-lavenderPurple p-6 w-full h-96 flex items-center justify-center shadow-lg">
-        <p class="text-softPink">Select a snippet to run</p>
+        class="border-4 border-brightMagenta rounded-lg bg-lavenderPurple p-4 w-full h-100 flex items-center justify-center shadow-lg relative">
+        <p id="select-message"
+          class="text-softPink absolute inset-0 flex items-center justify-center">
+          Select a snippet to run</p>
+        <div id="canvas-container"
+          class="w-full h-full flex items-center justify-center"></div>
       </div>
       <div class="text-center mt-4">
         <button id="stop-button"
@@ -149,19 +121,20 @@
         <div class="flex items-center justify-between mb-2">
           <h2 class="text-2xl font-semibold text-p5Color flex-grow">Dynamic Color Fade Grid Animation
           </h2>
+          
           <a href="https://github.com/vesnag/p5-ml5/blob/gh-pages-wrong/p5/twinkling-squares.js" target="_blank"
             class="ml-2 flex-shrink-0">
             <img
               src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
               alt="GitHub" class="w-6 h-6">
           </a>
+          
         </div>
         <p class="mb-4">This p5.js sketch creates a 5x5 grid of squares with different colors that dynamically fade in and out at random speeds and intervals, providing a visually captivating animation.</p>
         <button
           class="bg-p5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
           onclick="loadSketch('\/p5-ml5\/p5\/snippet2\/snippet.js')">Run
           Snippet</button>
-
       </div>
       
       <div
@@ -171,19 +144,20 @@
         <div class="flex items-center justify-between mb-2">
           <h2 class="text-2xl font-semibold text-p5Color flex-grow">Interactive Bouncing Circle with Confetti Effect
           </h2>
+          
           <a href="https://github.com/vesnag/p5-ml5/blob/gh-pages-wrong/p5/confetti-circles-of-purples.js" target="_blank"
             class="ml-2 flex-shrink-0">
             <img
               src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
               alt="GitHub" class="w-6 h-6">
           </a>
+          
         </div>
         <p class="mb-4">This p5.js snippet creates an interactive bouncing circle that changes color and triggers a confetti explosion when clicked.</p>
         <button
           class="bg-p5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
           onclick="loadSketch('\/p5-ml5\/p5\/snippet1\/snippet.js')">Run
           Snippet</button>
-
       </div>
       
     </div>
@@ -198,19 +172,13 @@
         <img src="/p5-ml5/ml5/snippet1/thumbnail.jpg" alt="ML5 Snippet 1"
           class="w-full h-48 object-cover rounded mb-4">
         <div class="flex items-center justify-between mb-2">
-          <h2 class="text-2xl font-semibold text-ml5Color flex-grow">ML5 Snippet 1
-          </h2>
-          <a href="" target="_blank"
-            class="ml-2 flex-shrink-0">
-            <img
-              src="https://github.githubassets.com/images/modules/logos_page/GitHub-Mark.png"
-              alt="GitHub" class="w-6 h-6">
-          </a>
+          <h2 class="text-2xl font-semibold text-ml5Color flex-grow">ML5 Snippet 1</h2>
+          
         </div>
-        <p class="mb-4">A cool p5.js sketch.</p>
+        <p class="mb-4">Lorem ipsum</p>
         <button
           class="bg-ml5-color text-white py-2 px-4 rounded-full hover:bg-darkPurple transition duration-300"
-          onclick="loadSketch('\/p5-ml5\/ml5\/snippet1\/')">Run
+          onclick="loadSketch('\/p5-ml5\/ml5\/snippet1\/snippet.js')">Run
           Snippet</button>
       </div>
       
@@ -236,50 +204,7 @@
     </div>
   </footer>
 
-  <script>
-    let currentSketch = null;
-    let currentScriptElement = null;
-
-    const stopSnippet = () => {
-      currentSketch?.remove();
-      currentSketch = null;
-
-      if (currentScriptElement) {
-        document.head.removeChild(currentScriptElement);
-        currentScriptElement = null;
-      }
-
-      document.getElementById('player-container').innerHTML = '<p class="text-softPink">Select a snippet to run</p>';
-      document.getElementById('stop-button').classList.add('hidden');
-    };
-
-    const loadSketch = (scriptPath) => {
-      currentSketch?.remove();
-      if (currentScriptElement) {
-        document.head.removeChild(currentScriptElement);
-      }
-
-      document.getElementById('player-container').innerHTML = '';
-      const scriptElement = document.createElement('script');
-      scriptElement.src = scriptPath;
-      document.head.appendChild(scriptElement);
-      currentScriptElement = scriptElement;
-
-      scriptElement.onload = () => {
-        if (typeof sketch === 'function') {
-          currentSketch = new p5(sketch, 'player-container');
-          startSnippet();
-        } else {
-          console.error('Sketch function not found in the loaded script.');
-        }
-      };
-    };
-
-    const startSnippet = () => {
-      document.getElementById('stop-button').classList.remove('hidden');
-    };
-  </script>
-
+  <script src="js/snippet-player.js"></script>
 </body>
 
 </html>
