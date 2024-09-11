@@ -27,7 +27,7 @@ function(p) {
   const squares = [];
 
   p.setup = function () {
-    p.createCanvas(460, 460);
+    p.createCanvas(400, 400);
     p.noStroke();
     squareSize = p.width / GRID_SIZE;
     initializeSquares();

@@ -23,7 +23,7 @@ function(p) {
   ];
 
   p.setup = function () {
-    p.createCanvas(600, 400);
+    p.createCanvas(400, 400);
     x = p.width / 2;
     y = p.height / 2;
     xspeed = p.random(2, 5);

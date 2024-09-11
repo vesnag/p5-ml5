@@ -8,14 +8,15 @@ const stopSnippet = () => {
     console.log('Current sketch removed');
   }
 
-  document.getElementById('player-container').innerHTML = '<p class="text-softPink">Select a snippet to run</p>';
+  document.getElementById('canvas-container').innerHTML = '';
+  document.getElementById('select-message').style.display = 'flex';
   document.getElementById('stop-button').classList.add('hidden');
   console.log('Stop button hidden');
 };
 
 const loadSketch = (sketchPath) => {
   console.log('loadSketch called with path:', sketchPath);
-  stopSnippet(); // Ensure any existing sketch is stopped
+  stopSnippet();
 
   fetch(sketchPath)
     .then(response => {
@@ -26,13 +27,13 @@ const loadSketch = (sketchPath) => {
     })
     .then(code => {
       console.log('Sketch code fetched successfully');
-      console.log('Fetched code:', code); // Log the fetched code for debugging
+      console.log('Fetched code:', code);
 
-      // Wrap the fetched code in a named function
       const wrappedCode = `return (${code});`;
       try {
         const sketchFunction = new Function(wrappedCode)();
-        currentSketch = new p5(sketchFunction, 'player-container'); // Ensure the sketch is attached to the correct container
+        currentSketch = new p5(sketchFunction, 'canvas-container');
+        document.getElementById('select-message').style.display = 'none';
         document.getElementById('stop-button').classList.remove('hidden');
         console.log('New sketch loaded and stop button shown');
       } catch (error) {
@@ -41,5 +42,3 @@ const loadSketch = (sketchPath) => {
     })
     .catch(error => console.error('Error loading sketch:', error));
 };
-
-//

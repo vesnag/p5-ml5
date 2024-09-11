@@ -94,8 +94,12 @@
       <h2 class="text-3xl font-semibold text-gray-800 text-center mb-6">Snippet
         Player</h2>
       <div id="player-container"
-        class="border-4 border-brightMagenta rounded-lg bg-lavenderPurple p-6 w-full h-96 flex items-center justify-center shadow-lg">
-        <p class="text-softPink">Select a snippet to run</p>
+        class="border-4 border-brightMagenta rounded-lg bg-lavenderPurple p-4 w-full h-100 flex items-center justify-center shadow-lg relative">
+        <p id="select-message"
+          class="text-softPink absolute inset-0 flex items-center justify-center">
+          Select a snippet to run</p>
+        <div id="canvas-container"
+          class="w-full h-full flex items-center justify-center"></div>
       </div>
       <div class="text-center mt-4">
         <button id="stop-button"
