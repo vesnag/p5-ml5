@@ -42,3 +42,8 @@ const loadSketch = (sketchPath) => {
     })
     .catch(error => console.error('Error loading sketch:', error));
 };
+
+const loadSketchAndScroll = (sketchPath) => {
+  loadSketch(sketchPath);
+  document.getElementById('snippet-player').scrollIntoView({ behavior: 'smooth' });
+};
