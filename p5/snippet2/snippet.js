@@ -11,7 +11,7 @@ function(p) {
     violet: '#623eaa',
     rosePink: '#f774aa',
     deepRed: '#8f2968',
-    darkRed: '#98254c',
+    darkRed: '#98254c'
   };
 
   const gridColors = [
@@ -54,7 +54,7 @@ function(p) {
       fadeSpeed: p.random(0.5, 2),
       fadeDirection: -1,
       delay: p.random(500, 2000),
-      startTime: p.millis(),
+      startTime: p.millis()
     };
   }
 
