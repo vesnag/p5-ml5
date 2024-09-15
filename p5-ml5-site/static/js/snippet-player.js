@@ -38,6 +38,7 @@ const loadSketch = (sketchPath) => {
         console.log('New sketch loaded and stop button shown');
       } catch (error) {
         console.error('Error executing fetched code:', error);
+        console.error('Fetched code:', code);
       }
     })
     .catch(error => console.error('Error loading sketch:', error));

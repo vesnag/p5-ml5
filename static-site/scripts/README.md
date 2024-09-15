@@ -49,6 +49,13 @@ npm install acorn astring
    };
    ```
 
+## Linting
+
+To lint the JavaScript files in the project, use the following command:
+```
+npx eslint ../p5-ml5-site/content/p5/**/*.js
+```
+
 ## Limitations
 
 - Functions that are not part of p5.js (e.g., `console.log`, `Math.random`) are not prefixed with `p.` and are automatically excluded.
