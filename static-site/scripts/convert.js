@@ -2,66 +2,52 @@ const acorn = require('acorn');
 const astring = require('astring');
 const fs = require('fs');
 
-// List of functions and objects to ignore (non-p5 functions)
 const nonP5Functions = [
   'console', 'setTimeout', 'setInterval', 'clearTimeout', 'clearInterval',
-  'Math', 'Date', 'JSON', 'window', 'document', 'alert', 'prompt', 'return'
+  'Math', 'Date', 'JSON', 'window', 'document', 'alert', 'prompt', 'return',
 ];
 
-// List of known global p5 functions and properties
 const p5Functions = [
-  'createCanvas', 'text', 'fill', 'background', 'ellipse', 'rect', 'random', 'dist',
-  'noStroke', 'stroke', 'line', 'color', 'textSize', 'textWidth', 'noFill',
-  'constrain', 'millis', 'setAlpha'
+  'createCanvas', 'background', 'fill', 'stroke', 'noStroke', 'line', 'ellipse',
+  'rect', 'text', 'textSize', 'textAlign', 'textWidth', 'noFill', 'color',
+  'random', 'noise', 'map', 'dist', 'constrain', 'millis', 'frameCount',
+  'push', 'pop', 'translate', 'rotate', 'scale',
 ];
 
-// List of p5.js properties
-const p5Properties = ['width', 'height', 'mouseX', 'mouseY'];
+const p5Properties = [
+  'width', 'height', 'mouseX', 'mouseY', 'pmouseX', 'pmouseY',
+  'frameCount', 'deltaTime', 'key', 'keyCode', 'keyIsPressed', 'mouseIsPressed',
+];
 
-// List of p5.js event functions that need to be assigned to `p`
 const p5EventFunctions = [
-  'setup', 'draw', 'mousePressed', 'mouseReleased', 'keyPressed', 'keyReleased'
+  'setup', 'draw', 'mousePressed', 'mouseReleased', 'mouseMoved', 'mouseDragged',
+  'keyPressed', 'keyReleased', 'windowResized',
 ];
 
-// Check if a name is a p5.js function
-function isP5Function(name) {
-  return p5Functions.includes(name);
-}
+const isP5Function = name => p5Functions.includes(name);
+const isP5Property = name => p5Properties.includes(name);
 
-// Check if a name is a p5.js property
-function isP5Property(name) {
-  return p5Properties.includes(name);
-}
+const createP5MemberExpression = name => ({
+  type: 'MemberExpression',
+  object: { type: 'Identifier', name: 'p' },
+  property: { type: 'Identifier', name },
+  computed: false,
+});
 
-// Transform the AST to add `p.` prefix to p5.js functions and properties
-function transformAST(node, currentFunctionParams = [], parent = null) {
-  if (node === null) return node;
+const transformAST = (node, currentFunctionParams = [], parent = null) => {
+  if (!node) return node;
 
-  // Handle function declarations and expressions
-  if (
-    node.type === 'FunctionDeclaration' ||
-    node.type === 'FunctionExpression'
-  ) {
+  if (node.type === 'FunctionDeclaration' || node.type === 'FunctionExpression') {
     const paramNames = node.params.map(param => param.name);
-    const newFunctionParams = currentFunctionParams.concat(paramNames);
+    const newFunctionParams = [...currentFunctionParams, ...paramNames];
 
-    // If it's an event function like 'setup' or 'draw', and needs to be attached to 'p'
-    if (
-      node.type === 'FunctionDeclaration' &&
-      p5EventFunctions.includes(node.id.name)
-    ) {
-      // Transform function setup() {} into p.setup = function() {}
+    if (node.type === 'FunctionDeclaration' && node.id && p5EventFunctions.includes(node.id.name)) {
       return {
         type: 'ExpressionStatement',
         expression: {
           type: 'AssignmentExpression',
           operator: '=',
-          left: {
-            type: 'MemberExpression',
-            object: { type: 'Identifier', name: 'p' },
-            property: { type: 'Identifier', name: node.id.name },
-            computed: false,
-          },
+          left: createP5MemberExpression(node.id.name),
           right: {
             type: 'FunctionExpression',
             params: node.params,
@@ -70,104 +56,83 @@ function transformAST(node, currentFunctionParams = [], parent = null) {
           },
         },
       };
-    } else {
-      // For other functions, recursively transform the body with the new parameter scope
-      node.body = transformAST(node.body, newFunctionParams, node);
-      return node;
     }
-  }
 
-  // Handle function calls
-  if (node.type === 'CallExpression') {
-    // Transform the callee
-    node.callee = transformAST(node.callee, currentFunctionParams, node);
-    // Transform the arguments
-    node.arguments = node.arguments.map(arg =>
-      transformAST(arg, currentFunctionParams, node)
-    );
+    node.body = transformAST(node.body, newFunctionParams, node);
     return node;
   }
 
-  // Handle member expressions
+  if (node.type === 'CallExpression') {
+    node.callee = transformAST(node.callee, currentFunctionParams, node);
+    node.arguments = node.arguments.map(arg => transformAST(arg, currentFunctionParams, node));
+    return node;
+  }
+
   if (node.type === 'MemberExpression') {
     node.object = transformAST(node.object, currentFunctionParams, node);
     node.property = transformAST(node.property, currentFunctionParams, node);
     return node;
   }
 
-  // Handle identifiers
   if (node.type === 'Identifier') {
-    // Do not modify function parameters
-    if (!currentFunctionParams.includes(node.name)) {
-      // Avoid modifying properties of other objects (e.g., COLORS.white)
-      if (
-        !(
-          parent &&
-          parent.type === 'MemberExpression' &&
-          parent.property === node &&
-          parent.object.type !== 'Identifier' &&
-          parent.object.name !== 'p'
-        )
-      ) {
-        if (isP5Function(node.name) && !nonP5Functions.includes(node.name)) {
-          // Prefix p5.js functions
-          return {
-            type: 'MemberExpression',
-            object: { type: 'Identifier', name: 'p' },
-            property: { type: 'Identifier', name: node.name },
-            computed: false,
-          };
-        } else if (isP5Property(node.name)) {
-          // Prefix p5.js properties
-          return {
-            type: 'MemberExpression',
-            object: { type: 'Identifier', name: 'p' },
-            property: { type: 'Identifier', name: node.name },
-            computed: false,
-          };
-        }
-      }
+    if (currentFunctionParams.includes(node.name)) return node;
+
+    const isPartOfMemberExpression = parent &&
+      parent.type === 'MemberExpression' &&
+      parent.property === node &&
+      parent.object.type !== 'Identifier' &&
+      parent.object.name !== 'p';
+
+    if (isPartOfMemberExpression) return node;
+
+    if (isP5Function(node.name) && !nonP5Functions.includes(node.name)) {
+      return createP5MemberExpression(node.name);
+    }
+
+    if (isP5Property(node.name)) {
+      return createP5MemberExpression(node.name);
     }
   }
 
-  // Recursively transform child nodes
-  for (const key in node) {
-    if (node.hasOwnProperty(key)) {
-      const child = node[key];
-      if (Array.isArray(child)) {
-        node[key] = child.map(c =>
-          typeof c === 'object' ? transformAST(c, currentFunctionParams, node) : c
-        );
-      } else if (child && typeof child === 'object') {
-        node[key] = transformAST(child, currentFunctionParams, node);
-      }
+  for (const [key, child] of Object.entries(node)) {
+    if (Array.isArray(child)) {
+      node[key] = child.map(c => (typeof c === 'object' && c !== null ? transformAST(c, currentFunctionParams, node) : c));
+    } else if (child && typeof child === 'object') {
+      node[key] = transformAST(child, currentFunctionParams, node);
     }
   }
 
   return node;
-}
+};
 
-// Function to convert p5.js sketch code to instance mode (input/output as strings)
-function convertToInstanceModeFromString(inputCode) {
-  // Parse the code into an AST
+const convertToInstanceModeFromString = inputCode => {
   const ast = acorn.parse(inputCode, {
     ecmaVersion: 2020,
     sourceType: 'module',
   });
 
-  // Transform the AST
   const transformedAST = transformAST(ast);
-
-  // Generate the modified code from the AST
   const transformedCode = astring.generate(transformedAST);
 
-  // Wrap the transformed code in the p5 instance mode function
   return `
 function(p) {
 ${transformedCode}
 }
   `;
+};
+
+const convertToInstanceMode = (inputFile, outputFile) => {
+  const inputCode = fs.readFileSync(inputFile, 'utf8');
+  const instanceModeCode = convertToInstanceModeFromString(inputCode);
+  fs.writeFileSync(outputFile, instanceModeCode, 'utf8');
+  console.log(`Conversion complete! Output written to ${outputFile}`);
+};
+
+const [, , inputFile, outputFile] = process.argv;
+if (inputFile && outputFile) {
+  convertToInstanceMode(inputFile, outputFile);
+} else {
+  console.log('Usage: node convert.js <inputFile> <outputFile>');
 }
 
-// Export the function for testing
 module.exports = { convertToInstanceModeFromString };
