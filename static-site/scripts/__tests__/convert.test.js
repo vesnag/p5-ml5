@@ -1,7 +1,6 @@
 const { convertToInstanceModeFromString } = require('../convert');
 
 test('convert p5.js sketch to instance mode', () => {
-  // Sample input code (a small p5.js sketch)
   const inputCode = `
 const COLORS = {
   lavenderPurple: '#9151b0',
@@ -21,7 +20,6 @@ function draw() {
 }
 `;
 
-  // Expected output (converted to instance mode)
   const expectedOutput = `
 function(p) {
 const COLORS = {
@@ -43,16 +41,13 @@ p.draw = function() {
 }
   `;
 
-  // Run the conversion
   const outputCode = convertToInstanceModeFromString(inputCode).trim();
 
-  // Normalize whitespace by removing extra spaces and newlines
   const normalize = str =>
     str
       .replace(/\s+/g, ' ')
       .replace(/function\s+\(/g, 'function(')
       .trim();
 
-  // Compare the output code with the expected output
   expect(normalize(outputCode)).toBe(normalize(expectedOutput));
 });
