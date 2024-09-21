@@ -19,6 +19,33 @@ let mic, fft;
 let bgColor = COLORS.white;
 const colorKeys = Object.keys(COLORS);
 
+class Particle {
+  constructor(x, y, velocity, size, color) {
+    this.pos = createVector(x, y);
+    this.vel = velocity;
+    this.size = size;
+    this.color = color;
+    this.lifespan = 255;
+  }
+
+  update() {
+    this.pos.add(this.vel);
+    this.lifespan -= 4;
+  }
+
+  display() {
+    noStroke();
+    fill(this.color.r, this.color.g, this.color.b, this.lifespan);
+    ellipse(this.pos.x, this.pos.y, this.size);
+  }
+
+  isDead() {
+    return this.lifespan < 0;
+  }
+}
+
+let particles = [];
+
 function preload() {
   faceMesh = ml5.faceMesh(faceMeshOptions);
 }
@@ -54,6 +81,25 @@ function draw() {
     });
   });
   drawFrequencyBars(spectrum);
+
+
+  // Particle system
+  const mouth = faces.length > 0 ? faces[0].keypoints[13] : null;
+  if (mouth && amplitude > 100) {
+    const vel = p5.Vector.random2D().mult(map(amplitude, 100, 255, 1, 5));
+    const size = map(amplitude, 100, 255, 5, 15);
+    const color = { r: 255, g: 0, b: 150 };
+    particles.push(new Particle(mouth.x, mouth.y, vel, size, color));
+  }
+
+
+  for (let i = particles.length - 1; i >= 0; i--) {
+    particles[i].update();
+    particles[i].display();
+    if (particles[i].isDead()) {
+      particles.splice(i, 1);
+    }
+  }
 }
 
 function getBackgroundColor(amplitude) {
